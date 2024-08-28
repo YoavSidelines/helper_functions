@@ -1,0 +1,43 @@
+function findIndexColumn() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = spreadsheet.getActiveSheet(); // Change to specific sheet if needed
+  const firstRow = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0]; // Get the first row
+  
+  for (let i = 0; i < firstRow.length; i++) {
+    if (firstRow[i] === "State") {
+      console.log("string found at column index: " + (i + 1));
+      return i + 1; // Google Sheets indexes start at 1, so return i + 1
+    }
+  }
+  
+  console.log("string not found.");
+  return -1; // Return -1 if "string" is not found
+}
+
+
+function formatDateString(date) {
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+  const dd = String(date.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+
+
+function extractParameterValue(url, parameterName) {
+  const regex = new RegExp(`${parameterName}=([^&]*)`);
+  const matches = url.match(regex);
+  return matches ? matches[1] : null;
+}
+
+
+  // Remove duplicate rows
+  var uniqueRows = [];
+  var seen = {};
+  rows.forEach(row => {
+    var rowString = JSON.stringify(row);
+    if (!seen[rowString]) {
+      seen[rowString] = true;
+      uniqueRows.push(row);
+    }
+  });
